@@ -944,4 +944,590 @@
   <!-- Banner image -->
   <div class="banner-container">
     <div class="banner-image">
-      <img src="https://i.ibb.co/F4X
+      <img src="https://i.ibb.co/F4XgxGFR/1x-Bet-Aviator-Predictor-Learn-Strategies-Katar-na-Varsikov-2035922166.png" alt="Predictor Banner">
+      <div class="banner-glow"></div>
+    </div>
+    <div class="app-title">
+      <h1>PREDICTOR APP</h1>
+      <p>Sistema de Previsão</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Prediction Display -->
+    <div class="prediction-display">
+      <div class="prediction-label">PRÓXIMA PREVISÃO</div>
+      <div class="predictor-circle inactive" id="predictorCircle">
+        <!-- Spinning border effect -->
+        <div class="spinning-border"></div>
+        
+        <!-- Original circle design -->
+        <div class="circle-overlay"></div>
+        <div class="prediction-value inactive" id="predictionValue">--</div>
+      </div>
+      <div class="prediction-meter">
+        <div class="meter-dot" id="meter1"></div>
+        <div class="meter-dot" id="meter2"></div>
+        <div class="meter-dot" id="meter3"></div>
+        <div class="meter-dot" id="meter4"></div>
+        <div class="meter-dot" id="meter5"></div>
+      </div>
+    </div>
+
+    <!-- Action Section -->
+    <div class="action-section">
+      <button class="predict-btn" id="predictBtn">
+        PROXIMA RODADA
+      </button>
+      
+      <div class="system-status">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <div class="status-text" id="statusText">AGUARDANDO ATIVAÇÃO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Content -->
+  <div class="menu-content" id="menuContent">
+    <div class="menu-section">
+      <div class="section-title">
+        <i class="fas fa-history"></i>
+        <span>ATIVAÇÃO RECENTE</span>
+      </div>
+      <div class="info-item">
+        <div class="info-label">ÚLTIMA ATIVAÇÃO</div>
+        <div class="info-value" id="lastActivation">Nunca ativado</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">VOUCHER ATIVO</div>
+        <div class="info-value" id="activeVoucher">Nenhum</div>
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <div class="section-title">
+        <i class="fas fa-key"></i>
+        <span>VOUCHERS RECENTES (30 DIAS)</span>
+      </div>
+      <div class="info-item">
+        <div class="info-label">TOTAL DE ATIVAÇÕES</div>
+        <div class="info-value" id="totalActivations">0</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">ÚLTIMO VOUCHER</div>
+        <div class="info-value" id="lastVoucher">Nenhum</div>
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <div class="section-title">
+        <i class="fas fa-shopping-cart"></i>
+        <span>ADQUIRIR VOUCHER</span>
+      </div>
+      <a href="https://predictor-voucher-predictor-app.vercel.app/" target="_blank" class="buy-btn" id="buyVoucherBtn">
+        <i class="fas fa-credit-card"></i>
+        COMPRAR VOUCHER VIP
+      </a>
+      <div class="info-item">
+        <div class="info-label">PREÇO</div>
+        <div class="info-value">659 MT / 2 dias</div>
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <div class="section-title">
+        <i class="fab fa-telegram"></i>
+        <span>SUPORTE TELEGRAM</span>
+      </div>
+      <button class="telegram-btn" id="telegramBtn">
+        <i class="fab fa-telegram"></i>
+        APOIO AO CLIENTE
+      </button>
+      <div class="info-item">
+        <div class="info-label">HORÁRIO DE ATENDIMENTO</div>
+        <div class="info-value">24 horas / 7 dias</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Menu -->
+  <div class="bottom-menu">
+    <button class="menu-btn" id="menuBtn">
+      <i class="fas fa-bars"></i>
+      MENU
+    </button>
+    <button class="menu-btn" id="historyBtn">
+      <i class="fas fa-history"></i>
+      HISTÓRICO
+    </button>
+    <button class="menu-btn" id="buyBtn">
+      <i class="fas fa-shopping-cart"></i>
+      COMPRAR
+    </button>
+    <button class="menu-btn" id="supportBtn">
+      <i class="fab fa-telegram"></i>
+      SUPORTE
+    </button>
+  </div>
+
+  <!-- Voucher Dialog -->
+  <div class="voucher-dialog" id="voucherDialog">
+    <div class="dialog-card">
+      <div class="dialog-header">
+        <div class="dialog-title">CÓDIGO DE ATIVAÇÃO</div>
+        <div class="dialog-subtitle">Digite o voucher para continuar</div>
+      </div>
+      
+      <div class="dialog-body">
+        <div class="voucher-input-container">
+          <input type="text" 
+                 class="voucher-input"
+                 id="voucherInput" 
+                 placeholder="VOUCHER"
+                 maxlength="10"
+                 autocomplete="off"
+                 spellcheck="false">
+        </div>
+        
+        <div class="dialog-actions">
+          <button class="dialog-btn cancel" id="dialogCancelBtn">CANCELAR</button>
+          <button class="dialog-btn activate" id="dialogActivateBtn">VERIFICAR</button>
+        </div>
+        
+        <div class="dialog-message" id="dialogMessage"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Loader -->
+  <div class="system-loader" id="systemLoader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">ATIVANDO</div>
+  </div>
+
+  <script>
+    // Elements
+    const predictionValue = document.getElementById('predictionValue');
+    const predictorCircle = document.getElementById('predictorCircle');
+    const predictBtn = document.getElementById('predictBtn');
+    const voucherDialog = document.getElementById('voucherDialog');
+    const dialogActivateBtn = document.getElementById('dialogActivateBtn');
+    const dialogCancelBtn = document.getElementById('dialogCancelBtn');
+    const voucherInput = document.getElementById('voucherInput');
+    const dialogMessage = document.getElementById('dialogMessage');
+    const systemLoader = document.getElementById('systemLoader');
+    const statusIndicator = document.getElementById('statusIndicator');
+    const statusText = document.getElementById('statusText');
+    const menuContent = document.getElementById('menuContent');
+    const menuBtn = document.getElementById('menuBtn');
+    const historyBtn = document.getElementById('historyBtn');
+    const buyBtn = document.getElementById('buyBtn');
+    const supportBtn = document.getElementById('supportBtn');
+    const lastActivation = document.getElementById('lastActivation');
+    const activeVoucher = document.getElementById('activeVoucher');
+    const totalActivations = document.getElementById('totalActivations');
+    const lastVoucher = document.getElementById('lastVoucher');
+    const telegramBtn = document.getElementById('telegramBtn');
+    
+    const meterDots = [
+      document.getElementById('meter1'),
+      document.getElementById('meter2'),
+      document.getElementById('meter3'),
+      document.getElementById('meter4'),
+      document.getElementById('meter5')
+    ];
+
+    // State
+    let systemActivated = false;
+    let isPredicting = false;
+    let menuOpen = false;
+    const VALID_VOUCHER = "MARK004";
+    const TELEGRAM_SUPPORT_URL = "https://t.me/Suporte_predictor";
+    
+    // Activation history
+    let activationHistory = [];
+    let lastActivationDate = null;
+    let activeVoucherCode = null;
+
+    // Function to mask voucher (e.g., MARK004 -> MA***04)
+    function maskVoucher(voucher) {
+      if (!voucher || voucher.length < 4) return voucher;
+      
+      const firstTwo = voucher.substring(0, 2);
+      const lastTwo = voucher.substring(voucher.length - 2);
+      const middleStars = '*'.repeat(3); // Always 3 stars
+      
+      return `<span class="voucher-masked">${firstTwo}${middleStars}${lastTwo}</span>`;
+    }
+
+    // Function to mask last voucher (e.g., MARK004 -> MA***04)
+    function maskLastVoucher(voucher) {
+      if (!voucher || voucher.length < 4) return voucher;
+      
+      const firstTwo = voucher.substring(0, 2);
+      const lastTwo = voucher.substring(voucher.length - 2);
+      const middleStars = '*'.repeat(3);
+      
+      return `${firstTwo}${middleStars}${lastTwo}`;
+    }
+
+    // Function to open Telegram support in external browser
+    function openTelegramSupport() {
+      try {
+        // Try to open in external browser using _system target
+        const newWindow = window.open(TELEGRAM_SUPPORT_URL, '_system');
+        
+        // Fallback if _system doesn't work
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          window.open(TELEGRAM_SUPPORT_URL, '_blank');
+        }
+      } catch (error) {
+        // Final fallback
+        window.location.href = TELEGRAM_SUPPORT_URL;
+      }
+    }
+
+    // Initialize history from localStorage
+    function initHistory() {
+      const savedHistory = localStorage.getItem('predictorHistory');
+      const savedActivation = localStorage.getItem('lastActivation');
+      const savedVoucher = localStorage.getItem('activeVoucher');
+      
+      if (savedHistory) {
+        activationHistory = JSON.parse(savedHistory);
+        totalActivations.textContent = activationHistory.length;
+      }
+      
+      if (savedActivation) {
+        lastActivationDate = new Date(savedActivation);
+        lastActivation.textContent = formatDate(lastActivationDate);
+      }
+      
+      if (savedVoucher) {
+        activeVoucherCode = savedVoucher;
+        // Display masked voucher
+        activeVoucher.innerHTML = maskVoucher(savedVoucher);
+        
+        // If voucher exists in localStorage, activate system
+        systemActivated = true;
+        predictorCircle.classList.remove('inactive');
+        predictionValue.classList.remove('inactive');
+        statusIndicator.classList.add('active');
+        statusText.textContent = 'SISTEMA ATIVADO';
+        statusText.style.color = '#00ff00';
+        predictBtn.textContent = 'GERAR PREVISÃO';
+        
+        meterDots.forEach(dot => {
+          dot.classList.add('active');
+          dot.style.animation = 'statusPulse 1s infinite';
+        });
+      }
+      
+      // Update last voucher if history exists
+      if (activationHistory.length > 0) {
+        const lastVoucherCode = activationHistory[activationHistory.length - 1].voucher;
+        lastVoucher.textContent = maskLastVoucher(lastVoucherCode);
+      }
+    }
+
+    // Format date function
+    function formatDate(date) {
+      return date.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Save activation to history
+    function saveActivation(voucher) {
+      const activation = {
+        voucher: voucher,
+        date: new Date().toISOString(),
+        timestamp: Date.now()
+      };
+      
+      activationHistory.push(activation);
+      lastActivationDate = new Date();
+      activeVoucherCode = voucher;
+      
+      // Keep only last 30 days
+      const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+      activationHistory = activationHistory.filter(a => a.timestamp > thirtyDaysAgo);
+      
+      // Update display with masked vouchers
+      lastActivation.textContent = formatDate(lastActivationDate);
+      activeVoucher.innerHTML = maskVoucher(voucher);
+      totalActivations.textContent = activationHistory.length;
+      lastVoucher.textContent = maskLastVoucher(voucher);
+      
+      // Save to localStorage
+      localStorage.setItem('predictorHistory', JSON.stringify(activationHistory));
+      localStorage.setItem('lastActivation', lastActivationDate.toISOString());
+      localStorage.setItem('activeVoucher', voucher);
+    }
+
+    // Prevent all scrolling and zoom
+    document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+    document.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+    document.addEventListener('gesturestart', (e) => e.preventDefault());
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    // Open voucher dialog when button is clicked
+    predictBtn.addEventListener('click', () => {
+      if (!systemActivated) {
+        openVoucherDialog();
+      } else {
+        generatePrediction();
+      }
+    });
+
+    // Voucher dialog functions
+    function openVoucherDialog() {
+      voucherDialog.classList.add('active');
+      document.body.classList.add('no-scroll');
+      setTimeout(() => {
+        voucherInput.focus();
+      }, 200);
+    }
+
+    function closeVoucherDialog() {
+      voucherDialog.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+      dialogMessage.textContent = '';
+      voucherInput.value = '';
+    }
+
+    // Verify voucher code
+    dialogActivateBtn.addEventListener('click', () => {
+      const enteredCode = voucherInput.value.trim().toUpperCase();
+      
+      if (!enteredCode) {
+        dialogMessage.textContent = 'Digite o voucher';
+        dialogMessage.className = 'dialog-message error';
+        voucherInput.focus();
+        return;
+      }
+      
+      if (enteredCode === VALID_VOUCHER) {
+        dialogMessage.textContent = '✅ Voucher correto!';
+        dialogMessage.className = 'dialog-message success';
+        
+        // Fecha o diálogo automaticamente após 1 segundo
+        setTimeout(() => {
+          closeVoucherDialog();
+          
+          systemLoader.classList.add('active');
+          
+          setTimeout(() => {
+            systemLoader.classList.remove('active');
+            systemActivated = true;
+            
+            // Save activation to history
+            saveActivation(enteredCode);
+            
+            // Update UI
+            predictorCircle.classList.remove('inactive');
+            predictionValue.classList.remove('inactive');
+            predictionValue.textContent = 'READY';
+            predictionValue.style.color = '#00ff00';
+            
+            statusIndicator.classList.add('active');
+            statusText.textContent = 'SISTEMA ATIVADO';
+            statusText.style.color = '#00ff00';
+            
+            predictBtn.textContent = 'GERAR PREVISÃO';
+            
+            meterDots.forEach(dot => {
+              dot.classList.add('active');
+              dot.style.animation = 'statusPulse 1s infinite';
+            });
+            
+            setTimeout(() => {
+              predictionValue.style.color = '#ff0000';
+              predictionValue.textContent = '--';
+            }, 800);
+          }, 1200);
+        }, 1000);
+        
+      } else {
+        dialogMessage.textContent = '❌ Voucher inválido';
+        dialogMessage.className = 'dialog-message error';
+        
+        voucherInput.style.transform = 'translateX(-5px)';
+        setTimeout(() => voucherInput.style.transform = 'translateX(5px)', 100);
+        setTimeout(() => voucherInput.style.transform = 'translateX(0)', 200);
+        
+        voucherInput.value = '';
+        voucherInput.focus();
+      }
+    });
+
+    // Cancel button
+    dialogCancelBtn.addEventListener('click', closeVoucherDialog);
+
+    // Menu functionality
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      if (menuOpen) {
+        menuContent.classList.add('active');
+        menuBtn.classList.add('active');
+      } else {
+        menuContent.classList.remove('active');
+        menuBtn.classList.remove('active');
+      }
+    }
+
+    function openMenuSection(section) {
+      menuContent.classList.add('active');
+      menuBtn.classList.add('active');
+      
+      // Scroll to section
+      const sections = document.querySelectorAll('.menu-section');
+      if (sections[section]) {
+        sections[section].scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Telegram support button
+    telegramBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openTelegramSupport();
+    });
+
+    // Support button in bottom menu
+    supportBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openTelegramSupport();
+    });
+
+    // Menu button events
+    menuBtn.addEventListener('click', toggleMenu);
+    
+    historyBtn.addEventListener('click', () => {
+      openMenuSection(0);
+    });
+    
+    buyBtn.addEventListener('click', () => {
+      openMenuSection(2);
+    });
+
+    // Enter key support
+    voucherInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') dialogActivateBtn.click();
+    });
+
+    // Escape key to close dialog
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && voucherDialog.classList.contains('active')) {
+        closeVoucherDialog();
+      }
+      if (e.key === 'Escape' && menuOpen) {
+        toggleMenu();
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (menuOpen && 
+          !menuContent.contains(e.target) && 
+          !menuBtn.contains(e.target) &&
+          !historyBtn.contains(e.target) &&
+          !buyBtn.contains(e.target) &&
+          !supportBtn.contains(e.target)) {
+        toggleMenu();
+      }
+    });
+
+    // Generate prediction function
+    function generatePrediction() {
+      if (!systemActivated) {
+        openVoucherDialog();
+        return;
+      }
+
+      if (isPredicting) return;
+      isPredicting = true;
+      
+      predictBtn.disabled = true;
+      predictionValue.textContent = '3';
+      predictionValue.style.color = '#ff9900';
+      
+      let dotIndex = 0;
+      const dotInterval = setInterval(() => {
+        meterDots[dotIndex].style.animation = 'none';
+        meterDots[dotIndex].offsetHeight;
+        meterDots[dotIndex].style.animation = 'statusPulse 0.5s infinite';
+        
+        dotIndex = (dotIndex + 1) % meterDots.length;
+      }, 300);
+
+      setTimeout(() => {
+        predictionValue.textContent = '2';
+        predictionValue.style.color = '#ff6600';
+      }, 1000);
+
+      setTimeout(() => {
+        predictionValue.textContent = '1';
+        predictionValue.style.color = '#ff3300';
+      }, 2000);
+
+      setTimeout(() => {
+        clearInterval(dotInterval);
+        
+        const randomBase = Math.random();
+        let multiplier;
+        
+        if (randomBase < 0.3) {
+          multiplier = (1 + Math.random() * 2).toFixed(2);
+        } else if (randomBase < 0.7) {
+          multiplier = (3.01 + Math.random() * 3).toFixed(2);
+        } else {
+          multiplier = (6.01 + Math.random() * 4).toFixed(2);
+        }
+        
+        predictionValue.textContent = `${multiplier}x`;
+        predictionValue.style.color = '#ff0000';
+        
+        predictorCircle.style.boxShadow = 'inset 0 0 60px rgba(0, 0, 0, 0.8), 0 0 100px rgba(255, 0, 0, 0.4)';
+        
+        setTimeout(() => {
+          predictorCircle.style.boxShadow = 'inset 0 0 60px rgba(0, 0, 0, 0.8), 0 0 80px rgba(0, 0, 0, 0.6)';
+        }, 300);
+        
+        meterDots.forEach(dot => {
+          dot.style.animation = 'statusPulse 1s infinite';
+        });
+        
+        predictBtn.disabled = false;
+        isPredicting = false;
+      }, 3000);
+    }
+
+    // Prevent dialog closing on background click
+    voucherDialog.addEventListener('click', (e) => {
+      if (e.target === voucherDialog) {
+        // Don't close on background click
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize history
+      initHistory();
+      
+      // Initialize with some effects
+      setTimeout(() => {
+        const banner = document.querySelector('.banner-image');
+        banner.style.transform = 'scale(1.03)';
+        setTimeout(() => {
+          banner.style.transform = 'scale(1)';
+        }, 300);
+      }, 800);
+    });
+  </script>
+</body>
+</html>
